@@ -12,21 +12,30 @@ object GUI extends SimpleSwingApplication{
   val inputButton3 = new Button()
   val inputButton4 = new Button()
 
-  var labelsTable =  new Array.ofDim[Label](12,4)
+  var labelsInputTable =  Array.ofDim[Label](12,4)
   for (i <- 0 to 11){
     for (j <- 0 to 3){
-        labelsTable(i)(j)= new Label()
+        labelsInputTable(i)(j)= new Label()
     }
   }
+
+  var labelsResultTable = Array.ofDim[Label](2,2)
+    labelsResultTable(1)(1) = new Label()
+    labelsResultTable(0)(0) = new Label()
+    labelsResultTable(1)(0) = new Label()
+    labelsResultTable(0)(1) = new Label()
 
 
   val confirmButton = new Button("Confirm")
 
   val resultPanel = new GridPanel(2,2){
-
+    contents += labelsResultTable(1)(1)
+    contents += labelsResultTable(0)(1)
+    contents += labelsResultTable(0)(0)
+    contents += labelsResultTable(1)(0)
   }
 
-  val inputPanel = new BoxPanel(Orientation.Vertical()){
+  val inputPanel = new BoxPanel(Orientation.Vertical){
     contents += inputButton1
     contents += inputButton2
     contents += inputButton3
@@ -34,11 +43,15 @@ object GUI extends SimpleSwingApplication{
   }
 
   val gamePanel = new GridPanel(12,2){
-
+      for( i <- 0 to 11){
+        for(j <- 0 to 3){
+          contents += labelsInputTable(i)(j)
+        }
+      }
   }
 
   val ui  = new BorderPanel{
-    add(inputPanel, BorderPanel.Position.East)
+    add(inputPanel, BorderPanel.Position.West)
     add(gamePanel, BorderPanel.Position.Center)
     add(confirmButton, BorderPanel.Position.South)
   }
