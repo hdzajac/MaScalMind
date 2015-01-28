@@ -2,10 +2,15 @@
  * Created by Hubert on 2015-01-28.
  */
 
+import java.awt.Color
+
 import swing._
 
 
 object GUI extends SimpleSwingApplication{
+
+
+  val inputGridBackground = Color.LIGHT_GRAY
 
   val inputButton1 = new Button()
   val inputButton2 = new Button()
@@ -15,25 +20,22 @@ object GUI extends SimpleSwingApplication{
   var labelsInputTable =  Array.ofDim[Label](12,4)
   for (i <- 0 to 11){
     for (j <- 0 to 3){
-        labelsInputTable(i)(j)= new Label()
+        labelsInputTable(i)(j)= new Label(Integer.toString((i+ 1) * (1 + j))){
+          background = inputGridBackground
+          foreground = inputGridBackground
+        }
     }
   }
 
   var labelsResultTable = Array.ofDim[Label](2,2)
-    labelsResultTable(1)(1) = new Label()
-    labelsResultTable(0)(0) = new Label()
-    labelsResultTable(1)(0) = new Label()
-    labelsResultTable(0)(1) = new Label()
+    for(i <- 0 to 11){
+      for(j <- 0 to 3){
+        labelsResultTable(i)(j) = new Label(Integer.toString((i+1) * (j+1)))
+      }
+    }
 
 
   val confirmButton = new Button("Confirm")
-
-  val resultPanel = new GridPanel(2,2){
-    contents += labelsResultTable(1)(1)
-    contents += labelsResultTable(0)(1)
-    contents += labelsResultTable(0)(0)
-    contents += labelsResultTable(1)(0)
-  }
 
   val inputPanel = new BoxPanel(Orientation.Vertical){
     contents += inputButton1
@@ -42,12 +44,32 @@ object GUI extends SimpleSwingApplication{
     contents += inputButton4
   }
 
-  val gamePanel = new GridPanel(12,2){
-      for( i <- 0 to 11){
-        for(j <- 0 to 3){
-          contents += labelsInputTable(i)(j)
-        }
+  val inputGrid =  new GridPanel(12,2){
+    for( i <- 0 to 11){
+      for(j <- 0 to 3){
+        contents += labelsInputTable(i)(j)
       }
+    }
+  }
+
+  def getResultGrid (row :Int): GridPanel ={
+    val tmpGrid = new GridPanel(2,2) {
+      for (i <- 0 to 3) {
+        contents += labelsResultTable(row)(i)
+      }
+    }
+    tmpGrid
+  }
+  val resultGrid = new GridPanel(2,2){
+    contents += labelsResultTable(0)(0)
+    contents += labelsResultTable(0)(1)
+    contents += labelsResultTable(1)(0)
+    contents += labelsResultTable(1)(1)
+  }
+
+  val gamePanel = new BorderPanel{
+      background = inputGridBackground
+      add(inputGrid, BorderPanel.Position.Center)
   }
 
   val ui  = new BorderPanel{
