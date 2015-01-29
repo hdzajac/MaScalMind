@@ -1,4 +1,3 @@
-//MasterMind.scala
 /**
  * Created by Marcin on 2015-01-28.
  */
@@ -12,8 +11,8 @@ class MasterMind {
   var misplaced : Int = 0
 
   def randomize(): Int = {
-    var r = new scala.util.Random
-    var rand = r.nextInt(6)
+    val r = new scala.util.Random
+    val rand = r.nextInt(6)
     println(rand)
     rand
   }
@@ -23,16 +22,9 @@ class MasterMind {
     for (i <- 0 to 3) {
       secretCode(i) = randomize()
     }
-
-    var Testnumbers = Array(1,0,2,3)
-
-    check(Testnumbers)
   }
 
-  //  def win() = {
-  //    won = true
-  //    println("You won!!!")
-  //  }
+
 
   def check(numbers: Array[Int]): Array[Int] ={
     right = 0
@@ -54,24 +46,11 @@ class MasterMind {
 
     }
     misplaced-=right
-    println("right: "+right)
-    println("misplaced: " + misplaced)
     val result =  new Array[Int](2)
     result(0) = right
     result(1) = misplaced
     result
   }
 
-}
-
-
-
-///Init.scala
-
-object Init{
-  def main(args: Array[String]) {
-    val gra = new MasterMind()
-    gra.newGame()
-  }
 }
 
